@@ -1,0 +1,20 @@
+.inputRow {
+    margin-bottom: 1rem;
+    display: flex;
+}
+
+.inputRow input {
+    width: 100%;
+    padding: var(--inputPadding);
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 1.2rem;
+    margin-top: -.75rem;
+    margin-bottom: 1rem;
+}
