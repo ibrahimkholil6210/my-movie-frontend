@@ -24,10 +24,6 @@ const LoginPage: React.FC = () => {
     },
   });
 
-  const { values, errors } = formik;
-
-  console.log({values,errors})
-
   return (
     <div className={Styles.PageWrapper}>
       <div className={Styles.LoginForm}>
