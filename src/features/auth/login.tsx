@@ -1,5 +1,6 @@
 import React from "react";
 import { useFormik, FormikProvider } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import Styles from "./Login.module.css";
 import Input from "../../components/Input";
@@ -12,6 +13,8 @@ const LoginPage: React.FC = () => {
     password: Yup.string().min(6).max(16).required("Password is required"),
   });
 
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -21,6 +24,7 @@ const LoginPage: React.FC = () => {
     validationSchema: validationSchemas,
     onSubmit: (data) => {
       console.log(data);
+      navigate("../movie/list");
     },
   });
 

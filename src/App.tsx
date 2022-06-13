@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Counter } from "./features/counter/Counter";
 import LoginPage from "./features/auth/Login";
 import HomePage from "./Home";
+import MovieList from "./features/movie/List";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/counter" element={<Counter />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/movie/list" element={<MovieList />} />
       </Routes>
     </>
   );
