@@ -9,4 +9,11 @@
     border: none;
     outline: none;
     font-size: 1.25rem;
+    border: 2px solid var(--mainColor);
+}
+
+.secondaryBtn{
+    background: transparent;
+    color: var(--mainColor);
+    border: 2px solid var(--mainColor);
 }
