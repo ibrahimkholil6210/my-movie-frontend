@@ -11,6 +11,7 @@
     "@types/node": "^17.0.39",
     "@types/react": "^18.0.10",
     "@types/react-dom": "^18.0.5",
+    "axios": "^0.27.2",
     "formik": "^2.2.9",
     "lodash.debounce": "^4.0.8",
     "rc-table": "^7.24.2",

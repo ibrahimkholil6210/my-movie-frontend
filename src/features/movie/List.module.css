@@ -1,94 +1,146 @@
 .MovieListWrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    margin: auto;
-    height: 100%;
-    min-height: 100vh;
-    padding: 30px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: auto;
+  height: 100%;
+  min-height: 100vh;
+  padding: 30px 50px;
 }
 
-.MovieListContainer{
-    width: 100%;
+.MovieListContainer {
+  width: 100%;
 }
 
 .ListContainer {
-    margin: 1rem 0;
+  margin: 1rem 0;
 }
 
 .ListItem {
-    font-size: 1.2rem;
-    font-weight: 500;
-    letter-spacing: -0.02rem;
-    margin-bottom: .5rem;
-    gap: 0 16px;
-    display: flex;
-    align-items: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.02rem;
+  margin-bottom: 0.5rem;
+  gap: 0 16px;
+  display: flex;
+  align-items: center;
 }
 
 .ImgContainer {
-    width: 20%;
-    aspect-ratio: 1;
+  width: 20%;
+  aspect-ratio: 1;
 }
 
 .ImgContainer img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
+.TitleContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
 .TitleContainer p {
-    font-size: 1.2rem;
-    font-weight: 500;
-    letter-spacing: -0.02rem;
-    margin-bottom: 0 0 .5rem 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.02rem;
+  margin-bottom: 0 0 0.5rem 0;
 }
 
 .ListItemInfo h4 {
-    margin: 0 0 .5rem 0;
+  margin: 0 0 0.5rem 0;
 }
 
 .ListItemInfo p {
-    margin: 0;
-    font-size: 1rem;
+  margin: 0;
+  font-size: 1rem;
 }
 
 .Table {
-    width: 100%;
-    padding: 30px 0;
+  width: 100%;
+  padding: 30px 0;
 }
 
 .Table table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.Table thead{
-    border-bottom: 1px solid #d2d2d2;
+.Table thead {
+  border-bottom: 1px solid #d2d2d2;
 }
 
-.Table thead tr th,.Table tbody tr td{
-    padding: 14px;
+.Table thead tr th,
+.Table tbody tr td {
+  padding: 14px;
 }
 
-.Table tbody tr td{
-    text-align: center;
+.Table tbody tr td {
+  text-align: center;
 }
 
-.Table tbody tr td img{
-    border-radius: 10px;
+.Table tbody tr td img {
+  border-radius: 10px;
 }
 
 .rowEven {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
-.Pagination{
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
+.Pagination {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.ldsHourglass {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.ldsHourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 32px solid var(--mainColor);
+  border-color: var(--mainColor) transparent var(--mainColor) transparent;
+  animation: ldsHourglass 1.2s infinite;
+}
+
+@keyframes ldsHourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
+.LoadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
 }

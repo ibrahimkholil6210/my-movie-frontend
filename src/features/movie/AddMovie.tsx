@@ -1,55 +1,50 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useFormik, FormikProvider } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { signinAsync, selectStatus, selectUser } from "../auth/authSlice";
-import Styles from "./Login.module.css";
+import { selectStatus, saveMovie } from "../movie/movieSlice";
+import Styles from "../auth/Login.module.css";
 import Input from "../../components/Input";
 import { Button } from "../../components/Button";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { ISaveMovie } from "./types";
 
-const LoginPage: React.FC = () => {
+const AddMoviePage: React.FC = () => {
   const validationSchemas = Yup.object().shape({
-    email: Yup.string().email().required("Email is required"),
-    password: Yup.string().min(6).max(16).required("Password is required"),
+    title: Yup.string().required("Title is required"),
+    description: Yup.string().required("Description is required"),
+    thumbnailUrl: Yup.string().required("ThumbnailUrl is required"),
   });
 
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectStatus);
-  const user = useAppSelector(selectUser);
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      title: "",
+      description: "",
+      thumbnailUrl: "",
     },
     validationSchema: validationSchemas,
-    onSubmit: (data) => {
-      console.log(data);
-      dispatch(
-        signinAsync(data.email, data.password, () => navigate("../"))
-      );
+    onSubmit: (data: ISaveMovie, formikHelper) => {
+      dispatch(saveMovie(data, () => formikHelper.resetForm()));
     },
   });
-
-  useEffect(() => {
-    if (user?.token) {
-      navigate("../");
-    }
-  }, []);
 
   return (
     <div className={Styles.PageWrapper}>
       <div className={Styles.LoginForm}>
-        <h1>Login</h1>
+        <h1>Add Your Favourite Movie</h1>
         <FormikProvider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <Input name="email" type="email" placeholder="Email" />
-            <Input name="password" type="password" placeholder="Password" />
+            <Input name="title" type="text" placeholder="Title" />
+            <Input name="description" type="text" placeholder="Description" />
+            <Input name="thumbnailUrl" type="text" placeholder="ThumbnailUrl" />
             <Button
               type="submit"
-              label="Submit"
+              label={status === "loading" ? "Saving" : "Save"}
               disabled={status === "loading"}
             />
           </form>
@@ -57,10 +52,10 @@ const LoginPage: React.FC = () => {
         <div className={Styles.ActionButton}>
           <Button
             type="button"
-            label="Signup"
+            label="Back to Movie List"
             varient="secondary"
             onClick={() => {
-              navigate("../signup");
+              navigate("../movie/list");
             }}
           />
         </div>
@@ -69,4 +64,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default AddMoviePage;
