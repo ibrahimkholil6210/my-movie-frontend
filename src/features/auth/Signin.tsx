@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useFormik, FormikProvider } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { signinAsync, selectStatus, selectUser } from "../auth/authSlice";
+import { signinAsync, selectStatus, selectUser } from "./authSlice";
 import Styles from "./Login.module.css";
 import Input from "../../components/Input";
 import { Button } from "../../components/Button";
