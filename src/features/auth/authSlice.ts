@@ -1,4 +1,6 @@
+import { AxiosError } from "axios";
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { AppThunk, RootState } from "../../app/store";
 import client from "../../lib/axios";
 
@@ -53,8 +55,13 @@ export const signupAsync =
       });
       dispatch(setStatus("idel"));
       signupRes.data.isCreated && callBack();
-    } catch (err) {
+    } catch (err: AxiosError | any) {
       dispatch(setStatus("error"));
+      toast.error(err?.response?.data?.message, {
+        onClose: () => {
+          dispatch(setStatus("idle"));
+        },
+      });
     }
   };
 
@@ -68,7 +75,6 @@ export const signinAsync =
         password,
       });
       dispatch(setStatus("idel"));
-      console.log({signinRes})
       dispatch(
         setUser({
           token: signinRes.data.token,
@@ -85,14 +91,20 @@ export const signinAsync =
       );
       localStorage.setItem("token", JSON.stringify(signinRes.data.token));
       signinRes.data && callBack();
-    } catch (err) {
+    } catch (err: AxiosError | any) {
       dispatch(setStatus("error"));
+      toast.error(err?.response?.data?.message, {
+        onClose: () => {
+          dispatch(setStatus("idle"));
+        },
+      });
     }
   };
 
 export const logout = (): AppThunk => (dispatch) => {
   dispatch(setUser({}));
   localStorage.removeItem("user");
+  localStorage.removeItem("token");
 };
 
 export default authSlice.reducer;

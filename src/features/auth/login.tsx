@@ -17,7 +17,6 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectStatus);
-  const user = useAppSelector(selectUser);
 
   const formik = useFormik({
     initialValues: {
@@ -27,14 +26,12 @@ const LoginPage: React.FC = () => {
     validationSchema: validationSchemas,
     onSubmit: (data) => {
       console.log(data);
-      dispatch(
-        signinAsync(data.email, data.password, () => navigate("../"))
-      );
+      dispatch(signinAsync(data.email, data.password, () => navigate("../")));
     },
   });
 
   useEffect(() => {
-    if (user?.token) {
+    if (localStorage.getItem("token")) {
       navigate("../");
     }
   }, []);

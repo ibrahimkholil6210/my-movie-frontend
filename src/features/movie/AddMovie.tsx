@@ -55,7 +55,7 @@ const AddMoviePage: React.FC = () => {
             label="Back to Movie List"
             varient="secondary"
             onClick={() => {
-              navigate("../movie/list");
+              navigate("../");
             }}
           />
         </div>

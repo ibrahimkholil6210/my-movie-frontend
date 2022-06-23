@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import Table from 'rc-table';
+import Table from "rc-table";
 import debouce from "lodash.debounce";
 import { useNavigate } from "react-router-dom";
 import {
@@ -15,6 +15,7 @@ import Pagination from "../../components/Pagination";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Button } from "../../components/Button";
 import UserInfo from "../../components/UserInfo";
+import { getToken } from "../../lib/auth";
 
 const List: React.FC<{}> = () => {
   const [search, setSearch] = useState("");
@@ -25,6 +26,7 @@ const List: React.FC<{}> = () => {
   const status = useAppSelector(selectStatus);
   const totalCount = useAppSelector(selectTotalCount);
   const navigation = useNavigate();
+  const token = getToken();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -33,7 +35,7 @@ const List: React.FC<{}> = () => {
 
   const handleDelete = (row: { _id: string }) => {
     dispatch(deleteMovie(row._id));
-    dispatch(getMovies(0, LIMIT, search, () => {}));
+    dispatch(getMovies((page - 1) * 10, LIMIT, search, () => {}));
   };
 
   const columns = [
@@ -51,12 +53,13 @@ const List: React.FC<{}> = () => {
       title: "Thumbnail",
       dataIndex: "thumbnailUrl",
       key: "thumbnailUrl",
-      render: () => {
+      render: (row: { thumbnailUrl: string }) => {
         return (
           <img
             alt="movie poster"
             src={
-              "https://image.tmdb.org/t/p/w500/xBHvZcjRiWyobQ9kxBhO6B2dtRI.jpg"
+              row.thumbnailUrl ||
+              "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg"
             }
             width="60px"
             height="60px"
@@ -74,6 +77,8 @@ const List: React.FC<{}> = () => {
           label="Delete"
           varient="secondary"
           onClick={() => {
+            const confirmed = window.confirm("Are you sure?");
+            if (!confirmed) return;
             handleDelete(row);
           }}
           style={{
@@ -106,6 +111,12 @@ const List: React.FC<{}> = () => {
     );
   }, []);
 
+  useEffect(() => {
+    if (!token) {
+      navigation("../login", { replace: true });
+    }
+  }, [token]);
+
   return (
     <div className={Styles.MovieListWrap}>
       <div className={Styles.MovieListContainer}>
@@ -114,7 +125,7 @@ const List: React.FC<{}> = () => {
             <h1>Movie List</h1>
             <p>Here are all your favourite movie</p>
           </div>
-          <UserInfo/>
+          <UserInfo />
         </div>
         <div className={InputStyles.inputRow} style={{ gap: "0 20px" }}>
           <input

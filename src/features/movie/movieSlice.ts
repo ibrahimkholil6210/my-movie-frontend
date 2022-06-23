@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import request from "axios";
 import { RootState, AppThunk } from "../../app/store";
@@ -50,7 +52,9 @@ export const getMovies =
     dispatch(setStatus("loading"));
     try {
       const apiRes = await client.get(
-        `/movies?offset=${offset}&limit=${limit}&search=${search}`
+        `/movies?offset=${offset}&limit=${limit}&sortBy=createdAt&sortDirection=-1${
+          search && `&search=${search}`
+        }`
       );
       dispatch(setMovies(apiRes.data.list));
       dispatch(setTotalCount(apiRes.data.totalCount));
@@ -58,7 +62,7 @@ export const getMovies =
     } catch (err) {
       console.log(err);
       if (request.isAxiosError(err) && err?.response?.status === 401) {
-        dispatch(logout())
+        dispatch(logout());
         errorCallBack();
       }
       dispatch(setStatus("failed"));
@@ -73,12 +77,17 @@ export const saveMovie =
       await client.post("/movies", data);
       dispatch(setStatus("idle"));
       successCallBack && successCallBack();
-    } catch (err) {
-      console.log(err);
+      toast.success("Movie saved successfully");
+    } catch (err: AxiosError | any) {
       if (request.isAxiosError(err) && err?.response?.status === 401) {
-        dispatch(logout())
+        dispatch(logout());
       }
       dispatch(setStatus("failed"));
+      toast.error(err?.response?.data?.message, {
+        onClose: () => {
+          dispatch(setStatus("idle"));
+        },
+      });
     }
   };
 
@@ -89,9 +98,15 @@ export const deleteMovie =
     try {
       client.delete(`/movies/${id}`);
       dispatch(setStatus("idle"));
-    } catch (err) {
+      toast.success("Movie deleted successfully");
+    } catch (err: AxiosError | any) {
       console.log(err);
       dispatch(setStatus("failed"));
+      toast.error(err?.response?.data?.message, {
+        onClose: () => {
+          dispatch(setStatus("idle"));
+        },
+      });
     }
   };
 

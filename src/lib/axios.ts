@@ -13,7 +13,6 @@ client.interceptors.request.use((config) => {
     config.headers.common.Authorization = `Bearer ${JSON.parse(localStorage.getItem('token') || '')}`;
   }
 
-  console.log('Interceptor',{config})
   return config;
 }, (error) => {
   return Promise.reject(error);

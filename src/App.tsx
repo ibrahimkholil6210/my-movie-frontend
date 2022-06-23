@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Counter } from "./features/counter/Counter";
 import { selectUser } from "./features/auth/authSlice";
 import LoginPage from "./features/auth/Login";
-import HomePage from "./Home";
 import MovieList from "./features/movie/List";
 import SignupPage from "./features/auth/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -43,6 +44,7 @@ function App() {
           }
         />
       </Routes>
+      <ToastContainer position="top-center" theme="colored"/>
     </>
   );
 }
